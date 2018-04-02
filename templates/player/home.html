@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Welcome {{user.username}}</h1>
+    <div class="row">
+        <div class="col">
+    These are your active games.
+    <ul>
+        {% for g in games %}
+        <a class="list-group-item" href="{{ g.get_absolute_url }}">
+        {{g.first_player}} vs {{g.second_player}}
+        </a>
+            {% endfor %}
+    </ul>
+
+    <a href="{% url 'player_new_invitation' %}">
+        Invite another user to play a game
+    </a>
+
+    </div>
+        <div class="col">
+            <h3>Invitations</h3>
+            {% if invitations %}
+            <div class="list-group">
+                {% for inv in invitations %}
+                <a class="list-group-item" href="{% url 'player_accept_invitation' id=inv.id %}">
+                    {{ inv.from_user.username }} has invited you to a game
+
+                </a>
+
+                {% endfor %}
+
+            </div>
+            {% else %}
+            <p> You have no invitations</p>
+            {% endif %}
+    </div>
+    </div>
+
+{% endblock %}
